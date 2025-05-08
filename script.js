@@ -227,88 +227,108 @@ function logikaBidak(warna, kotak, baris, kolom) {
 }
 
 function logikaGame() {
-    // let gameOver = false;
+    let gameOver = false;
     let giliran = true;
     let jalan = [[], []];
     let jalanTerpilih = jalan;
     let kotakTerpilih = petak[0][0];
     petak.forEach((kolom, baris) => {
         kolom.forEach((kotak, kolom) => {
-            if (kotak.querySelector(cekWarna(giliran)))
             kotak.diklik = false;
             kotakTerpilih.diklik = false;
             kotak.addEventListener("mouseenter", function() {
-                if (!kotak.diklik && kotak.querySelector(cekWarna(giliran))) {
-                    kotak.style.backgroundColor = "rgba(2, 173, 159, 0.8)";
-                } else if ((jalan[0].includes(kotak) || jalan[1].includes(kotak)) && kotakTerpilih.diklik){
-                    kotak.style.backgroundColor = "rgba(2, 173, 159, 0.8)";
+                if (!gameOver) {
+                    if (!kotak.diklik && kotak.querySelector(cekWarna(giliran))) {
+                        kotak.style.backgroundColor = "rgba(2, 173, 159, 0.8)";
+                    } else if ((jalan[0].includes(kotak) || jalan[1].includes(kotak)) && kotakTerpilih.diklik){
+                        kotak.style.backgroundColor = "rgba(2, 173, 159, 0.8)";
+                    }
                 }
             });
             kotak.addEventListener("mouseleave", function() {
-                if (!kotak.diklik && kotak.querySelector(cekWarna(giliran))) {
-                    kotak.style.backgroundColor = "";
-                } else if (kotakTerpilih.diklik) {
-                    if (jalan[0].includes(kotak)){
-                        kotak.style.backgroundColor = "rgba(173, 2, 2, 0.8)";
-                    } else if (jalan[1].includes(kotak)){
-                        kotak.style.backgroundColor = "rgba(2, 13, 173, 0.8)";
+                if (!gameOver) {
+                    if (!kotak.diklik && kotak.querySelector(cekWarna(giliran))) {
+                        kotak.style.backgroundColor = "";
+                    } else if (kotakTerpilih.diklik) {
+                        if (jalan[0].includes(kotak)){
+                            kotak.style.backgroundColor = "rgba(173, 2, 2, 0.8)";
+                        } else if (jalan[1].includes(kotak)){
+                            kotak.style.backgroundColor = "rgba(2, 13, 173, 0.8)";
+                        }
                     }
                 }
             });
             kotak.addEventListener('click', function() {
-                if (kotak.querySelector(cekWarna(giliran))) {
-                    if (kotakTerpilih == kotak) {
-                        kotak.diklik = !kotak.diklik;
-                    } else {
-                        kotakTerpilih.style.backgroundColor = "";
+                if (!gameOver) {
+                    if (kotak.querySelector(cekWarna(giliran))) {
+                        if (kotakTerpilih == kotak) {
+                            kotak.diklik = !kotak.diklik;
+                        } else {
+                            kotakTerpilih.style.backgroundColor = "";
+                            kotakTerpilih.diklik = false;
+                            kotakTerpilih = kotak;
+                            kotak.diklik = true;
+                            for (let i = 0; i < jalanTerpilih[0].length; i++) {
+                                jalanTerpilih[0][i].style.backgroundColor = "";
+                            }
+                            for (let i = 0; i < jalanTerpilih[1].length; i++) {
+                                jalanTerpilih[1][i].style.backgroundColor = "";
+                            }
+                        }
+                        if (kotak.diklik) {
+                            kotak.style.backgroundColor = "rgba(2, 173, 159, 1)";
+                            jalan = logikaBidak(giliran, kotakTerpilih, baris, kolom);
+                            jalanTerpilih = jalan;
+                            for (let i = 0; i < jalan[0].length; i++) {
+                                jalan[0][i].style.backgroundColor = "rgba(173, 2, 2, 0.8)";
+                            }
+                            for (let i = 0; i < jalan[1].length; i++) {
+                                jalan[1][i].style.backgroundColor = "rgba(2, 13, 173, 0.8)";
+                            }
+                        } else if (!kotak.diklik) {
+                            kotak.style.backgroundColor = "rgba(2, 173, 159, 0.8)";
+                            for (let i = 0; i < jalanTerpilih[0].length; i++) {
+                                jalanTerpilih[0][i].style.backgroundColor = "";
+                            }
+                            for (let i = 0; i < jalanTerpilih[1].length; i++) {
+                                jalanTerpilih[1][i].style.backgroundColor = "";
+                            }
+                        }
+                    }
+                    if (kotakTerpilih.diklik && (jalan[0].includes(kotak) || jalan[1].includes(kotak))) {
+                        let pemenang = 0;
+                        if (jalan[0].includes(kotak)){
+                            if (kotak.querySelector('.raja.bidakHitam')) {
+                                pemenang = 1;
+                                gameOver = true;
+                            } else if (kotak.querySelector('.raja.bidakPutih')) {
+                                pemenang = 2;
+                                gameOver = true;
+                            }
+                            kotak.innerHTML = '';
+                            kotak.innerHTML = kotakTerpilih.innerHTML;
+                            kotakTerpilih.innerHTML = '';
+                        } else if (jalan[1].includes(kotak)){
+                            kotak.innerHTML = kotakTerpilih.innerHTML;
+                            kotakTerpilih.innerHTML = '';
+                        }
+                        for (let i = 0; i < jalanTerpilih[0].length; i++) {
+                            jalanTerpilih[0][i].style.backgroundColor = "";
+                        }
+                        for (let i = 0; i < jalanTerpilih[1].length; i++) {
+                            jalanTerpilih[1][i].style.backgroundColor = "";
+                        }
                         kotakTerpilih.diklik = false;
-                        kotakTerpilih = kotak;
-                        kotak.diklik = true;
-                        for (let i = 0; i < jalanTerpilih[0].length; i++) {
-                            jalanTerpilih[0][i].style.backgroundColor = "";
-                        }
-                        for (let i = 0; i < jalanTerpilih[1].length; i++) {
-                            jalanTerpilih[1][i].style.backgroundColor = "";
-                        }
-                    }
-                    if (kotak.diklik) {
-                        kotak.style.backgroundColor = "rgba(2, 173, 159, 1)";
-                        jalan = logikaBidak(giliran, kotakTerpilih, baris, kolom);
-                        jalanTerpilih = jalan;
-                        for (let i = 0; i < jalan[0].length; i++) {
-                            jalan[0][i].style.backgroundColor = "rgba(173, 2, 2, 0.8)";
-                        }
-                        for (let i = 0; i < jalan[1].length; i++) {
-                            jalan[1][i].style.backgroundColor = "rgba(2, 13, 173, 0.8)";
-                        }
-                    } else if (!kotak.diklik) {
-                        kotak.style.backgroundColor = "rgba(2, 173, 159, 0.8)";
-                        for (let i = 0; i < jalanTerpilih[0].length; i++) {
-                            jalanTerpilih[0][i].style.backgroundColor = "";
-                        }
-                        for (let i = 0; i < jalanTerpilih[1].length; i++) {
-                            jalanTerpilih[1][i].style.backgroundColor = "";
+                        kotakTerpilih.style.backgroundColor = "";
+                        giliran = !giliran;
+                        if (pemenang == 1) {
+                            alert('putih menang');
+                            // petak[2][0].innerHTML = "putih menang";
+                        } else if (pemenang == 2) {
+                            // petak[2][0].innerHTML = "hitam menang";
+                            alert('hitam menang');
                         }
                     }
-                }
-                if (kotakTerpilih.diklik && (jalan[0].includes(kotak) || jalan[1].includes(kotak))) {
-                    if (jalan[0].includes(kotak)){
-                        kotak.innerHTML = '';
-                        kotak.innerHTML = kotakTerpilih.innerHTML;
-                        kotakTerpilih.innerHTML = '';
-                    } else if (jalan[1].includes(kotak)){
-                        kotak.innerHTML = kotakTerpilih.innerHTML;
-                        kotakTerpilih.innerHTML = '';
-                    }
-                    for (let i = 0; i < jalanTerpilih[0].length; i++) {
-                        jalanTerpilih[0][i].style.backgroundColor = "";
-                    }
-                    for (let i = 0; i < jalanTerpilih[1].length; i++) {
-                        jalanTerpilih[1][i].style.backgroundColor = "";
-                    }
-                    kotakTerpilih.diklik = false;
-                    kotakTerpilih.style.backgroundColor = "";
-                    giliran = !giliran;
                 }
             });
         });
