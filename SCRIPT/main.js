@@ -1,4 +1,7 @@
 import { GameManager } from "./gameManager.js";
 
-const game = new GameManager();
-game.mulaiGame();
+
+document.addEventListener("DOMContentLoaded", () => {
+    const game = new GameManager();
+    game.mulaiGame();
+});
