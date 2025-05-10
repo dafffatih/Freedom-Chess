@@ -321,13 +321,13 @@ function logikaGame() {
                         kotakTerpilih.diklik = false;
                         kotakTerpilih.style.backgroundColor = "";
                         giliran = !giliran;
-                        if (pemenang == 1) {
-                            alert('putih menang');
-                            // petak[2][0].innerHTML = "putih menang";
-                        } else if (pemenang == 2) {
-                            // petak[2][0].innerHTML = "hitam menang";
-                            alert('hitam menang');
-                        }
+                        // if (pemenang == 1) {
+                        //     alert('putih menang');
+                        //     // petak[2][0].innerHTML = "putih menang";
+                        // } else if (pemenang == 2) {
+                        //     // petak[2][0].innerHTML = "hitam menang";
+                        //     alert('hitam menang');
+                        // }
                     }
                 }
             });

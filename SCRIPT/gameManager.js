@@ -1,14 +1,19 @@
 import { Papan } from "./papan.js";
+import { LogikaGame } from "./logikaGame.js";
 
 export class GameManager {
     constructor() {
         this.papan = new Papan();
+        this.logikaGame = new LogikaGame(this.papan);
     }
 
     #susunBidak() {
         for (let i = 0; i < 8; i++) {
             this.papan.setBidak('pion', 'putih', 6, i);
             this.papan.setBidak('pion', 'hitam', 1, i);
+            for (let j = 2; j < 6; j++) {
+                this.papan.setBidak('kosong', '', j, i);
+            }
         }
         this.papan.setBidak('benteng', 'hitam', 0, 0);
         this.papan.setBidak('kuda', 'hitam', 0, 1);
@@ -30,6 +35,7 @@ export class GameManager {
 
     mulaiGame() {
         this.#susunBidak();
+        this.logikaGame.mulaiLogika(this.papan);
     }
 
 
