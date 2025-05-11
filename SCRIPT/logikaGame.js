@@ -1,8 +1,21 @@
+import * as Bidak from "./bidak.js";
+
 export class LogikaGame {
     constructor(papan) {
-        this.papan = papan;
+        this.papan = papan; // objek class Papan
+        this.map = this.papan.getPapan(); // array berisi objek Bidak
+    }
+
+    #logikaJalan(bidakAsal, bidakTujuan) {
+        let barisAsal = bidakAsal.getBaris();
+        let kolomAsal = bidakAsal.getKolom();
+        let namaAsal = bidakAsal.getNama();
+        let warnaAsal = bidakAsal.getWarna();
+        let barisTujuan = bidakTujuan.getBaris();
+        let KolomTujuan = bidakTujuan.getKolom();
+        this.papan.setBidak(namaAsal, warnaAsal, barisTujuan, KolomTujuan);
+        this.papan.setBidak('kosong', '', barisAsal, kolomAsal);
         this.map = this.papan.getPapan();
-        this.mapHTML = this.papan.getPapanHTML();
     }
 
     mulaiLogika() {
@@ -13,52 +26,67 @@ export class LogikaGame {
         this.map.forEach((x, baris) => {
             x.forEach((bidak, kolom) => {
                 bidakTerpilih.diklik = false;
-                bidak.getDataHTML().addEventListener('mouseenter', function() {
+                bidak.getDataHTML().addEventListener('mouseenter', () => {
+                    bidak = this.map[bidak.getBaris()][bidak.getKolom()];
+                    bidakTerpilih = this.map[bidakTerpilih.getBaris()][bidakTerpilih.getKolom()];
                     if (!gameOver) {
-                        if (bidak.getWarna() == giliran && !bidak.diklik) {
+                        if ((bidak.getWarna() == giliran && !bidak.diklik) || (bidakTerpilih.diklik && jalan.flat().includes(bidak))) {
                             bidak.getDataHTML().style.backgroundColor = 'rgba(2, 173, 159, 0.8)';
-                        }
-                        if (bidakTerpilih.diklik) {
-                            
                         }
                     }
                 });
-                bidak.getDataHTML().addEventListener('mouseleave', function() {
+                bidak.getDataHTML().addEventListener('mouseleave', () => {
+                    bidak = this.map[bidak.getBaris()][bidak.getKolom()];
+                    bidakTerpilih = this.map[bidakTerpilih.getBaris()][bidakTerpilih.getKolom()];
                     if (!gameOver) {
                         if (bidak.getWarna() == giliran && !bidak.diklik) {
                             bidak.getDataHTML().style.backgroundColor = '';
                         }
+                        if (bidakTerpilih.diklik && jalan[0].includes(bidak)) {
+                            bidak.getDataHTML().style.backgroundColor = 'rgba(2, 13, 173, 0.8)';
+                        }
+                        if (bidakTerpilih.diklik && jalan[1].includes(bidak)) {
+                            bidak.getDataHTML().style.backgroundColor = 'rgba(173, 2, 2, 0.8)';
+                        }
                     }
                 });
-                bidak.getDataHTML().addEventListener('click', function() {
-                    // this.map[3][3].getDataHTML().innerHTML = "cobvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+                bidak.getDataHTML().addEventListener('click', () => {
+                    bidak = this.map[bidak.getBaris()][bidak.getKolom()];
+                    bidakTerpilih = this.map[bidakTerpilih.getBaris()][bidakTerpilih.getKolom()];
                     if (!gameOver) {
                         if (bidak.getWarna() == giliran) {
                             if (bidakTerpilih === bidak) {
                                 bidakTerpilih.diklik = !bidakTerpilih.diklik;
                             } else {
                                 bidakTerpilih.diklik = false;
+                                jalan.flat().forEach((jalan2) => {jalan2.getDataHTML().style.backgroundColor = '';});
                                 bidakTerpilih.getDataHTML().style.backgroundColor = '';
                                 bidakTerpilih = bidak;
                                 bidakTerpilih.diklik = true;
                             }
                             if (bidakTerpilih.diklik) {
-                                jalan = bidakTerpilih.cekJalan();
-                                // for (let i = 0; i < jalan[0].length; i++) {
-                                //     jalan[0][i].getDataHTML().style.backgroundColor = 'rgba(2, 13, 173, 0.8)'
-                                // }
-                                // for (let i = 0; i < jalan[1].length; i++) {
-                                //     jalan[1][i].getDataHTML().style.backgroundColor = 'rgba(173, 2, 2, 0.8)'
-                                // }
+                                jalan = bidakTerpilih.cekJalan(this.map);
+                                for (let i = 0; i < jalan[0].length; i++) {
+                                    jalan[0][i].getDataHTML().style.backgroundColor = 'rgba(2, 13, 173, 0.8)'
+                                }
+                                for (let i = 0; i < jalan[1].length; i++) {
+                                    jalan[1][i].getDataHTML().style.backgroundColor = 'rgba(173, 2, 2, 0.8)'
+                                }
                                 bidakTerpilih.getDataHTML().style.backgroundColor = 'rgba(2, 173, 159, 1)';
                             } else {
+                                jalan.flat().forEach((jalan2) => {jalan2.getDataHTML().style.backgroundColor = '';});
                                 bidakTerpilih.getDataHTML().style.backgroundColor = 'rgba(2, 173, 159, 0.8)';
                             }
+                        }
+                        if (jalan.flat().includes(bidak) && bidakTerpilih.diklik) {
+                            jalan.flat().forEach((jalan2) => {jalan2.getDataHTML().style.backgroundColor = '';});
+                            bidakTerpilih.getDataHTML().style.backgroundColor = '';
+                            bidakTerpilih.diklik = false;
+                            this.#logikaJalan(bidakTerpilih, bidak);
                         }
                     }
                 });
             });
         });
-        // this.papan.setBidak('pion', 'putih', 3, 4);
     }
 }

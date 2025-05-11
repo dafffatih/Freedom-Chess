@@ -41,63 +41,28 @@ export class Papan {
         this.papanHTML = papanHTML;
     }
 
-    cekWarnaBidak(bidak) {
-
-    }
-
     setBidak(bidak, warna, baris, kolom) {
         switch (bidak) {
             case 'pion':
-                // if (warna == 'putih') {
-                //     this.papanHTML[baris][kolom].innerHTML = this.pionPutih;
-                // } else {
-                //     this.papanHTML[baris][kolom].innerHTML = this.pionHitam;
-                // }
-                this.papan[baris][kolom] = new Bidak.Pion(warna, baris, kolom, this.papanHTML[baris][kolom]);
+                this.papan[baris][kolom] = new Bidak.Pion(bidak, warna, baris, kolom, this.papanHTML[baris][kolom]);
                 break;
             case 'benteng':
-                // if (warna == 'putih') {
-                //     this.papanHTML[baris][kolom].innerHTML = this.bentengPutih;
-                // } else {
-                //     this.papanHTML[baris][kolom].innerHTML = this.bentengHitam;
-                // }
-                this.papan[baris][kolom] = new Bidak.Benteng(warna, baris, kolom, this.papanHTML[baris][kolom]);
+                this.papan[baris][kolom] = new Bidak.Benteng(bidak, warna, baris, kolom, this.papanHTML[baris][kolom]);
                 break;
             case 'kuda':
-                // if (warna == 'putih') {
-                //     this.papanHTML[baris][kolom].innerHTML = this.kudaPutih;
-                // } else {
-                //     this.papanHTML[baris][kolom].innerHTML = this.kudaHitam;
-                // }
-                this.papan[baris][kolom] = new Bidak.Kuda(warna, baris, kolom, this.papanHTML[baris][kolom]);
+                this.papan[baris][kolom] = new Bidak.Kuda(bidak, warna, baris, kolom, this.papanHTML[baris][kolom]);
                 break;
             case 'peluncur':
-                // if (warna == 'putih') {
-                //     this.papanHTML[baris][kolom].innerHTML = this.peluncurPutih;
-                // } else {
-                //     this.papanHTML[baris][kolom].innerHTML = this.peluncurHitam;
-                // }
-                this.papan[baris][kolom] = new Bidak.Peluncur(warna, baris, kolom, this.papanHTML[baris][kolom]);
+                this.papan[baris][kolom] = new Bidak.Peluncur(bidak, warna, baris, kolom, this.papanHTML[baris][kolom]);
                 break;
             case 'mentri':
-                // if (warna == 'putih') {
-                //     this.papanHTML[baris][kolom].innerHTML = this.mentriPutih;
-                // } else {
-                //     this.papanHTML[baris][kolom].innerHTML = this.mentriHitam;
-                // }
-                this.papan[baris][kolom] = new Bidak.Mentri(warna, baris, kolom, this.papanHTML[baris][kolom]);
+                this.papan[baris][kolom] = new Bidak.Mentri(bidak, warna, baris, kolom, this.papanHTML[baris][kolom]);
                 break;
             case 'raja':
-                // if (warna == 'putih') {
-                //     this.papanHTML[baris][kolom].innerHTML = this.rajaPutih;
-                // } else {
-                //     this.papanHTML[baris][kolom].innerHTML = this.rajaHitam;
-                // }
-                this.papan[baris][kolom] = new Bidak.Raja(warna, baris, kolom, this.papanHTML[baris][kolom]);
+                this.papan[baris][kolom] = new Bidak.Raja(bidak, warna, baris, kolom, this.papanHTML[baris][kolom]);
                 break;
             case 'kosong':
-                // this.papanHTML[baris][kolom].innerHTML = '';
-                this.papan[baris][kolom] = new Bidak.Kosong(warna, baris, kolom, this.papanHTML[baris][kolom]);
+                this.papan[baris][kolom] = new Bidak.Kosong(bidak, warna, baris, kolom, this.papanHTML[baris][kolom]);
                 break;
         }
     }

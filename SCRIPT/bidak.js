@@ -1,5 +1,6 @@
 export class Bidak {
-    constructor(warna, baris, kolom, dataHTML) {
+    constructor(nama, warna, baris, kolom, dataHTML) {
+        this.nama = nama;
         this.warna = warna;
         this.baris = baris;
         this.kolom = kolom;
@@ -7,76 +8,82 @@ export class Bidak {
         this.jalan = [[],[]]; // [[kosong],[musuh]]
     }
 
-    cekJalan(papan) { //papan ini sisinya data semua bidak 8x8 untuk mencari dimanakah jalan yang valid
-        return jalan;
+    cekJalan(papan) { //papan ini isinya data semua bidak 8x8 untuk mencari dimanakah jalan yang valid
+        return this.jalan;
     }
 
-    setPosisiBaru(baris, kolom) {
-        this.baris = baris;
-        this.kolom = kolom;
+    jalan(barisBaru, kolomBaru, dataHTMLBaru) {
+        this.baris = barisBaru;
+        this.kolom = kolomBaru;
+        this.dataHTML = dataHTMLBaru;
     }
-
-    getDataHTML() {
-        return this.dataHTML;
+    
+    getNama() {
+        return this.nama;
     }
 
     getWarna() {
         return this.warna;
     }
-
+    
     getBaris() {
         return this.baris;
     }
-
+    
     getKolom() {
         return this.kolom;
+    }
+
+    getDataHTML() {
+        return this.dataHTML;
     }
 }
 
 export class Pion extends Bidak {
-    constructor(warna, baris, kolom, dataHTML) {
-        super(warna, baris, kolom, dataHTML);
+    constructor(nama, warna, baris, kolom, dataHTML) {
+        super(nama, warna, baris, kolom, dataHTML);
         if (warna == 'putih') {
             dataHTML.innerHTML = '<i class="fa-solid fa-chess-pawn" style="color: white"></i>';
         } else {
             dataHTML.innerHTML = '<i class="fa-solid fa-chess-pawn"></i>';
         }
     }
+    
     cekJalan(papan) {
-        if (warna == 'putih') {
-            if (baris > 0 && papan[baris - 1][kolom].getWarna == '') {
-                this.jalan[0].push(papan[baris - 1][kolom]);
-                if (this.baris == 6 && papan[baris - 2][kolom].getWarna == '') {
-                    this.jalan[0].push(papan[baris - 2][kolom]);
+        if (this.warna == 'putih') {
+            if (this.baris > 0 && papan[this.baris - 1][this.kolom].getWarna() == '') {
+                this.jalan[0].push(papan[this.baris - 1][this.kolom]);
+                if (this.baris == 6 && papan[this.baris - 2][this.kolom].getWarna() == '') {
+                    this.jalan[0].push(papan[this.baris - 2][this.kolom]);
                 } 
             }
-            if (kolom > 0 && papan[baris - 1][kolom - 1].getWarna == 'hitam') {
-                this.jalan[1].push(papan[baris - 1][kolom - 1]);
+            if (this.kolom > 0 && papan[this.baris - 1][this.kolom - 1].getWarna() == 'hitam') {
+                this.jalan[1].push(papan[this.baris - 1][this.kolom - 1]);
             }
-            if (kolom < 7 && papan[baris - 1][kolom + 1].getWarna == 'hitam') {
-                this.jalan[1].push(papan[baris - 1][kolom + 1]);
+            if (this.kolom < 7 && papan[this.baris - 1][this.kolom + 1].getWarna() == 'hitam') {
+                this.jalan[1].push(papan[this.baris - 1][this.kolom + 1]);
             }
         } else {
-            if (baris < 7 && papan[baris + 1][kolom].getWarna == '') {
-                this.jalan[0].push(papan[baris + 1][kolom]);
-                if (this.baris == 1 && papan[baris + 2][kolom].getWarna == '') {
-                    this.jalan[0].push(papan[baris + 2][kolom]);
+            if (this.baris < 7 && papan[this.baris + 1][this.kolom].getWarna() == '') {
+                this.jalan[0].push(papan[this.baris + 1][this.kolom]);
+                if (this.baris == 1 && papan[this.baris + 2][this.kolom].getWarna() == '') {
+                    this.jalan[0].push(papan[this.baris + 2][this.kolom]);
                 } 
             }
-            if (kolom > 0 && papan[baris + 1][kolom - 1].getWarna == 'putih') {
-                this.jalan[1].push(papan[baris + 1][kolom - 1]);
+            if (this.kolom > 0 && papan[this.baris + 1][this.kolom - 1].getWarna() == 'putih') {
+                this.jalan[1].push(papan[this.baris + 1][this.kolom - 1]);
             }
-            if (kolom < 7 && papan[baris + 1][kolom + 1].getWarna == 'putih') {
-                this.jalan[1].push(papan[baris + 1][kolom + 1]);
+            if (this.kolom < 7 && papan[this.baris + 1][this.kolom + 1].getWarna() == 'putih') {
+                this.jalan[1].push(papan[this.baris + 1][this.kolom + 1]);
             }
         }
-        return jalan;
+        return this.jalan;
     }
 }
 
 export class Benteng extends Bidak {
-    constructor(warna, baris, kolom, dataHTML) {
-        super(warna, baris, kolom, dataHTML);
+    constructor(nama, warna, baris, kolom, dataHTML) {
+        super(nama, warna, baris, kolom, dataHTML);
         if (warna == 'putih') {
             dataHTML.innerHTML = '<i class="fa-solid fa-chess-rook" style="color: white"></i>';
         } else {
@@ -84,13 +91,13 @@ export class Benteng extends Bidak {
         }
     }
     cekJalan(papan) {
-        return jalan;
+        return this.jalan;
     }
 }
 
 export class Kuda extends Bidak {
-    constructor(warna, baris, kolom, dataHTML) {
-        super(warna, baris, kolom, dataHTML);
+    constructor(nama, warna, baris, kolom, dataHTML) {
+        super(nama, warna, baris, kolom, dataHTML);
         if (warna == 'putih') {
             dataHTML.innerHTML = '<i class="fa-solid fa-chess-knight" style="color: white"></i>';
         } else {
@@ -98,13 +105,13 @@ export class Kuda extends Bidak {
         }
     }
     cekJalan(papan) {
-        return jalan;
+        return this.jalan;
     }
 }
 
 export class Peluncur extends Bidak {
-    constructor(warna, baris, kolom, dataHTML) {
-        super(warna, baris, kolom, dataHTML);
+    constructor(nama, warna, baris, kolom, dataHTML) {
+        super(nama, warna, baris, kolom, dataHTML);
         if (warna == 'putih') {
             dataHTML.innerHTML = '<i class="fa-solid fa-chess-bishop" style="color: white"></i>';
         } else {
@@ -112,13 +119,13 @@ export class Peluncur extends Bidak {
         }
     }
     cekJalan(papan) {
-        return jalan;
+        return this.jalan;
     }
 }
 
 export class Mentri extends Bidak {
-    constructor(warna, baris, kolom, dataHTML) {
-        super(warna, baris, kolom, dataHTML);
+    constructor(nama, warna, baris, kolom, dataHTML) {
+        super(nama, warna, baris, kolom, dataHTML);
         if (warna == 'putih') {
             dataHTML.innerHTML = '<i class="fa-solid fa-chess-queen" style="color: white"></i>';
         } else {
@@ -126,13 +133,13 @@ export class Mentri extends Bidak {
         }
     }
     cekJalan(papan) {
-        return jalan;
+        return this.jalan;
     }
 }
 
 export class Raja extends Bidak {
-    constructor(warna, baris, kolom, dataHTML) {
-        super(warna, baris, kolom, dataHTML);
+    constructor(nama, warna, baris, kolom, dataHTML) {
+        super(nama, warna, baris, kolom, dataHTML);
         if (warna == 'putih') {
             dataHTML.innerHTML = '<i class="fa-solid fa-chess-king" style="color: white"></i>';
         } else {
@@ -140,16 +147,16 @@ export class Raja extends Bidak {
         }
     }
     cekJalan(papan) {
-        return jalan;
+        return this.jalan;
     }
 }
 
 export class Kosong extends Bidak {
-    constructor(warna, baris, kolom, dataHTML) {
-        super(warna, baris, kolom, dataHTML);
+    constructor(nama, warna, baris, kolom, dataHTML) {
+        super(nama, warna, baris, kolom, dataHTML);
         dataHTML.innerHTML = '';
     }
     cekJalan(papan) {
-        return jalan;
+        return this.jalan;
     }
 }
