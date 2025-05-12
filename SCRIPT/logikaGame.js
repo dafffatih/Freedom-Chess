@@ -18,6 +18,14 @@ export class LogikaGame {
         this.map = this.papan.getPapan();
     }
 
+    #gantian(giliran) {
+        if (giliran == 'putih') {
+            return 'hitam';
+        } else {
+            return 'putih';
+        }
+    }
+
     mulaiLogika() {
         let gameOver = false;
         let giliran = 'putih';
@@ -65,7 +73,8 @@ export class LogikaGame {
                                 bidakTerpilih.diklik = true;
                             }
                             if (bidakTerpilih.diklik) {
-                                jalan = bidakTerpilih.cekJalan(this.map);
+                                // alert('hati hati')
+                                jalan = bidakTerpilih.cekJalan(this.papan.getPapan());
                                 for (let i = 0; i < jalan[0].length; i++) {
                                     jalan[0][i].getDataHTML().style.backgroundColor = 'rgba(2, 13, 173, 0.8)'
                                 }
@@ -83,6 +92,7 @@ export class LogikaGame {
                             bidakTerpilih.getDataHTML().style.backgroundColor = '';
                             bidakTerpilih.diklik = false;
                             this.#logikaJalan(bidakTerpilih, bidak);
+                            giliran = this.#gantian(giliran);
                         }
                     }
                 });

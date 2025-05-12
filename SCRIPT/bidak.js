@@ -5,11 +5,10 @@ export class Bidak {
         this.baris = baris;
         this.kolom = kolom;
         this.dataHTML = dataHTML;
-        this.jalan = [[],[]]; // [[kosong],[musuh]]
     }
 
     cekJalan(papan) { //papan ini isinya data semua bidak 8x8 untuk mencari dimanakah jalan yang valid
-        return this.jalan;
+        return [[],[]]; // [[kosong],[musuh]]
     }
 
     jalan(barisBaru, kolomBaru, dataHTMLBaru) {
@@ -50,34 +49,35 @@ export class Pion extends Bidak {
     }
     
     cekJalan(papan) {
+        let jalan = [[],[]];
         if (this.warna == 'putih') {
             if (this.baris > 0 && papan[this.baris - 1][this.kolom].getWarna() == '') {
-                this.jalan[0].push(papan[this.baris - 1][this.kolom]);
+                jalan[0].push(papan[this.baris - 1][this.kolom]);
                 if (this.baris == 6 && papan[this.baris - 2][this.kolom].getWarna() == '') {
-                    this.jalan[0].push(papan[this.baris - 2][this.kolom]);
+                    jalan[0].push(papan[this.baris - 2][this.kolom]);
                 } 
             }
             if (this.kolom > 0 && papan[this.baris - 1][this.kolom - 1].getWarna() == 'hitam') {
-                this.jalan[1].push(papan[this.baris - 1][this.kolom - 1]);
+                jalan[1].push(papan[this.baris - 1][this.kolom - 1]);
             }
             if (this.kolom < 7 && papan[this.baris - 1][this.kolom + 1].getWarna() == 'hitam') {
-                this.jalan[1].push(papan[this.baris - 1][this.kolom + 1]);
+                jalan[1].push(papan[this.baris - 1][this.kolom + 1]);
             }
         } else {
             if (this.baris < 7 && papan[this.baris + 1][this.kolom].getWarna() == '') {
-                this.jalan[0].push(papan[this.baris + 1][this.kolom]);
+                jalan[0].push(papan[this.baris + 1][this.kolom]);
                 if (this.baris == 1 && papan[this.baris + 2][this.kolom].getWarna() == '') {
-                    this.jalan[0].push(papan[this.baris + 2][this.kolom]);
+                    jalan[0].push(papan[this.baris + 2][this.kolom]);
                 } 
             }
             if (this.kolom > 0 && papan[this.baris + 1][this.kolom - 1].getWarna() == 'putih') {
-                this.jalan[1].push(papan[this.baris + 1][this.kolom - 1]);
+                jalan[1].push(papan[this.baris + 1][this.kolom - 1]);
             }
             if (this.kolom < 7 && papan[this.baris + 1][this.kolom + 1].getWarna() == 'putih') {
-                this.jalan[1].push(papan[this.baris + 1][this.kolom + 1]);
+                jalan[1].push(papan[this.baris + 1][this.kolom + 1]);
             }
         }
-        return this.jalan;
+        return jalan;
     }
 }
 
@@ -91,7 +91,26 @@ export class Benteng extends Bidak {
         }
     }
     cekJalan(papan) {
-        return this.jalan;
+        let jalan = [[],[]];
+        let gerakBaris = [-1, 0, 1, 0];
+        let gerakKolom = [0, 1, 0, -1];
+        for (let i = 0; i < 4; i++) {
+            let barisTemp = this.baris + gerakBaris[i];
+            let kolomTemp = this.kolom + gerakKolom[i];
+            while (barisTemp >= 0 && barisTemp <= 7 && kolomTemp >= 0 && kolomTemp <= 7) {
+                if (papan[barisTemp][kolomTemp].getWarna() == '') {
+                    jalan[0].push(papan[barisTemp][kolomTemp]);
+                } else if (papan[barisTemp][kolomTemp].getWarna() == this.warna) {
+                    break;
+                } else {
+                    jalan[1].push(papan[barisTemp][kolomTemp]);
+                    break;
+                }
+                barisTemp += gerakBaris[i];
+                kolomTemp += gerakKolom[i];
+            }
+        }
+        return jalan;
     }
 }
 
@@ -105,7 +124,21 @@ export class Kuda extends Bidak {
         }
     }
     cekJalan(papan) {
-        return this.jalan;
+        let jalan = [[],[]];
+        let gerakBaris = [-2, -2, -1, 1, 2, 2, 1, -1];
+        let gerakKolom = [-1, 1, 2, 2, 1, -1, -2, -2];
+        for (let i = 0; i < 8; i++) {
+            let barisTemp = this.baris + gerakBaris[i];
+            let kolomTemp = this.kolom + gerakKolom[i];
+            if (barisTemp >= 0 && barisTemp <= 7 && kolomTemp >= 0 && kolomTemp <= 7) {
+                if (papan[barisTemp][kolomTemp].getWarna() == '') {
+                    jalan[0].push(papan[barisTemp][kolomTemp]);
+                } else if (papan[barisTemp][kolomTemp].getWarna() != this.warna) {
+                    jalan[1].push(papan[barisTemp][kolomTemp]);
+                }
+            }
+        }
+        return jalan;
     }
 }
 
@@ -119,7 +152,26 @@ export class Peluncur extends Bidak {
         }
     }
     cekJalan(papan) {
-        return this.jalan;
+        let jalan = [[],[]];
+        let gerakBaris = [-1, -1, 1, 1];
+        let gerakKolom = [-1, 1, 1, -1];
+        for (let i = 0; i < 4; i++) {
+            let barisTemp = this.baris + gerakBaris[i];
+            let kolomTemp = this.kolom + gerakKolom[i];
+            while (barisTemp >= 0 && barisTemp <= 7 && kolomTemp >= 0 && kolomTemp <= 7) {
+                if (papan[barisTemp][kolomTemp].getWarna() == '') {
+                    jalan[0].push(papan[barisTemp][kolomTemp]);
+                } else if (papan[barisTemp][kolomTemp].getWarna() == this.warna) {
+                    break;
+                } else {
+                    jalan[1].push(papan[barisTemp][kolomTemp]);
+                    break;
+                }
+                barisTemp += gerakBaris[i];
+                kolomTemp += gerakKolom[i];
+            }
+        }
+        return jalan;
     }
 }
 
@@ -133,7 +185,26 @@ export class Mentri extends Bidak {
         }
     }
     cekJalan(papan) {
-        return this.jalan;
+        let jalan = [[],[]];
+        let gerakBaris = [-1, -1, -1, 0, 1, 1, 1, 0];
+        let gerakKolom = [-1, 0, 1, 1, 1, 0, -1, -1];
+        for (let i = 0; i < 8; i++) {
+            let barisTemp = this.baris + gerakBaris[i];
+            let kolomTemp = this.kolom + gerakKolom[i];
+            while (barisTemp >= 0 && barisTemp <= 7 && kolomTemp >= 0 && kolomTemp <= 7) {
+                if (papan[barisTemp][kolomTemp].getWarna() == '') {
+                    jalan[0].push(papan[barisTemp][kolomTemp]);
+                } else if (papan[barisTemp][kolomTemp].getWarna() == this.warna) {
+                    break;
+                } else {
+                    jalan[1].push(papan[barisTemp][kolomTemp]);
+                    break;
+                }
+                barisTemp += gerakBaris[i];
+                kolomTemp += gerakKolom[i];
+            }
+        }
+        return jalan;
     }
 }
 
@@ -147,7 +218,21 @@ export class Raja extends Bidak {
         }
     }
     cekJalan(papan) {
-        return this.jalan;
+        let jalan = [[],[]];
+        let gerakBaris = [-1, -1, -1, 0, 1, 1, 1, 0];
+        let gerakKolom = [-1, 0, 1, 1, 1, 0, -1, -1];
+        for (let i = 0; i < 8; i++) {
+            let barisTemp = this.baris + gerakBaris[i];
+            let kolomTemp = this.kolom + gerakKolom[i];
+            if (barisTemp >= 0 && barisTemp <= 7 && kolomTemp >= 0 && kolomTemp <= 7) {
+                if (papan[barisTemp][kolomTemp].getWarna() == '') {
+                    jalan[0].push(papan[barisTemp][kolomTemp]);
+                } else if (papan[barisTemp][kolomTemp].getWarna() != this.warna) {
+                    jalan[1].push(papan[barisTemp][kolomTemp]);
+                }
+            }
+        }
+        return jalan;
     }
 }
 
@@ -157,6 +242,6 @@ export class Kosong extends Bidak {
         dataHTML.innerHTML = '';
     }
     cekJalan(papan) {
-        return this.jalan;
+        return jalan;
     }
 }

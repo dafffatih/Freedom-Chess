@@ -33,6 +33,7 @@ export class GameManager {
         this.papan.setBidak('benteng', 'putih', 7, 7);
 
         // this.papan.setBidak('pion', 'putih', 2, 0);
+        this.papan.setBidak('benteng', 'putih', 5, 4);
     }
 
     mulaiGame() {
