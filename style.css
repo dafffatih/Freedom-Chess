@@ -14,34 +14,56 @@ html, body {
     pointer-events: none;
 }
 
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.header button {
+    font-family: 'Times New Roman';
+    font-size: 15px;
+    background-color: rgba(99, 99, 99, 0.8);
+    color: #fff;
+    border: none;
+    height: 50px;
+    width: 100px;
+    border-radius: 15px;
+    box-shadow: 
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 20px #fff,
+        0 0 30px #fff,
+        0 0 40px #fff;
+}
+
+.header button:hover {
+    background-color: rgba(144, 144, 144, 0.8);
+    cursor: pointer;
+}
+
+.header button:active {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #000
+}
+
 .judul {
     font-family: 'Lavishly Yours';
     font-size: 50px;
-    position: fixed;
     color: black;
     margin-left: 20px;
-    /* text-shadow: 
-        0 0 5px #fff,
-        0 0 10px #fff,
-        0 0 20px #ff00ff,
-        0 0 30px #ff00ff,
-        0 0 40px #ff00ff; */
     text-shadow: 
         0 0 5px #fff,
         0 0 10px #fff,
         0 0 20px #fff,
         0 0 30px #fff,
         0 0 40px #fff;
-        /* text-shadow: 
-        0 0 5px #000,
-        0 0 10px #000,
-        0 0 20px #000,
-        0 0 30px #000,
-        0 0 40px #000; */
 }
 
 .papan {
-    height: 100%;
+    margin-top: 50px;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -1,9 +1,12 @@
 import * as Bidak from "./bidak.js";
 
 export class LogikaGame {
-    constructor(papan) {
+    constructor(papan, riwayatGame) {
         this.papan = papan; // objek class Papan
         this.map = this.papan.getPapan(); // array berisi objek Bidak
+        this.riwayatGame = riwayatGame;
+        this.undo = document.getElementById('undo');
+        this.restart = document.getElementById('restart');
     }
 
     #logikaJalan(bidakAsal, bidakTujuan) {
@@ -16,6 +19,7 @@ export class LogikaGame {
         this.papan.setBidak(namaAsal, warnaAsal, barisTujuan, KolomTujuan);
         this.papan.setBidak('kosong', '', barisAsal, kolomAsal);
         this.map = this.papan.getPapan();
+        this.riwayatGame.addRiwayat(this.map);
     }
 
     #gantian(giliran) {
@@ -39,6 +43,7 @@ export class LogikaGame {
                     bidakTerpilih = this.map[bidakTerpilih.getBaris()][bidakTerpilih.getKolom()];
                     if (!gameOver) {
                         if ((bidak.getWarna() == giliran && !bidak.diklik) || (bidakTerpilih.diklik && jalan.flat().includes(bidak))) {
+                            bidak.getDataHTML().style.cursor = 'pointer';
                             bidak.getDataHTML().style.backgroundColor = 'rgba(2, 173, 159, 0.8)';
                         }
                     }
@@ -47,6 +52,7 @@ export class LogikaGame {
                     bidak = this.map[bidak.getBaris()][bidak.getKolom()];
                     bidakTerpilih = this.map[bidakTerpilih.getBaris()][bidakTerpilih.getKolom()];
                     if (!gameOver) {
+                        bidak.getDataHTML().style.cursor = 'default';
                         if (bidak.getWarna() == giliran && !bidak.diklik) {
                             bidak.getDataHTML().style.backgroundColor = '';
                         }
@@ -96,6 +102,24 @@ export class LogikaGame {
                         }
                     }
                 });
+            });
+        });
+        this.undo.addEventListener('click', () => {
+            if (this.riwayatGame.getPanjangRiwayat() != 1) {
+                giliran = this.#gantian(giliran);
+            }
+            let mapBaru = this.riwayatGame.undo();
+            this.papan.setPapan(mapBaru);
+            this.map = mapBaru;
+            mapBaru.flat().forEach((bidak) => {
+                this.papan.setBidak(bidak.getNama(), bidak.getWarna(), bidak.getBaris(), bidak.getKolom());
+            });
+        });
+        this.restart.addEventListener('click', () => {
+            giliran = 'putih';
+            let mapBaru = this.riwayatGame.restart();
+            mapBaru.flat().forEach((bidak) => {
+                this.papan.setBidak(bidak.getNama(), bidak.getWarna(), bidak.getBaris(), bidak.getKolom());
             });
         });
     }

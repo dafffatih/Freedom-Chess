@@ -6,6 +6,7 @@
     <title>Chess</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- <script src="script.js" defer></script> -->
     <script type="module" src="SCRIPT/main.js" defer></script>
@@ -14,8 +15,14 @@
     <video loop muted autoplay id="wallpaper">
         <source src="wallpaper.mp4" type="video/mp4">
     </video>
-    <div class="judul">
-        CHESS
+    <div class="header">
+        <div class="restart">
+            <button id="restart">RESTART</button>
+        </div>
+        <div class="judul">CHESS</div>
+        <div class="undo ">
+            <button id="undo">UNDO</button>
+        </div>
     </div>
     <div id="cekStatus"></div>
     <div class="papan">
