@@ -44,15 +44,6 @@ petak[7][5].innerHTML = peluncurPutih;
 petak[7][6].innerHTML = kudaPutih;
 petak[7][7].innerHTML = bentengPutih;
 
-// let bidakPutih = document.getElementsByClassName("bidakPutih");
-// let bidakHitam = document.getElementsByClassName("bidakHitam");
-// let pion = document.getElementsByClassName("pion");
-// let benteng = document.getElementsByClassName("benteng");
-// let kuda = document.getElementsByClassName("kuda");
-// let peluncur = document.getElementsByClassName("peluncur");
-// let mentri = document.getElementsByClassName("mentri");
-// let raja = document.getElementsByClassName("raja");
-
 function cekWarna(giliran) {
     if (giliran) {
         return '.bidakPutih';
@@ -321,13 +312,6 @@ function logikaGame() {
                         kotakTerpilih.diklik = false;
                         kotakTerpilih.style.backgroundColor = "";
                         giliran = !giliran;
-                        // if (pemenang == 1) {
-                        //     alert('putih menang');
-                        //     // petak[2][0].innerHTML = "putih menang";
-                        // } else if (pemenang == 2) {
-                        //     // petak[2][0].innerHTML = "hitam menang";
-                        //     alert('hitam menang');
-                        // }
                     }
                 }
             });

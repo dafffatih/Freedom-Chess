@@ -40,6 +40,4 @@ export class GameManager {
         this.#susunBidak();
         this.logikaGame.mulaiLogika(this.papan);
     }
-
-
 }

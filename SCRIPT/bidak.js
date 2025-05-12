@@ -90,6 +90,7 @@ export class Benteng extends Bidak {
             dataHTML.innerHTML = '<i class="fa-solid fa-chess-rook"></i>';
         }
     }
+    
     cekJalan(papan) {
         let jalan = [[],[]];
         let gerakBaris = [-1, 0, 1, 0];
@@ -123,6 +124,7 @@ export class Kuda extends Bidak {
             dataHTML.innerHTML = '<i class="fa-solid fa-chess-knight"></i>';
         }
     }
+
     cekJalan(papan) {
         let jalan = [[],[]];
         let gerakBaris = [-2, -2, -1, 1, 2, 2, 1, -1];
@@ -151,6 +153,7 @@ export class Peluncur extends Bidak {
             dataHTML.innerHTML = '<i class="fa-solid fa-chess-bishop"></i>';
         }
     }
+
     cekJalan(papan) {
         let jalan = [[],[]];
         let gerakBaris = [-1, -1, 1, 1];
@@ -184,6 +187,7 @@ export class Mentri extends Bidak {
             dataHTML.innerHTML = '<i class="fa-solid fa-chess-queen"></i>';
         }
     }
+
     cekJalan(papan) {
         let jalan = [[],[]];
         let gerakBaris = [-1, -1, -1, 0, 1, 1, 1, 0];
@@ -217,6 +221,7 @@ export class Raja extends Bidak {
             dataHTML.innerHTML = '<i class="fa-solid fa-chess-king"></i>';
         }
     }
+
     cekJalan(papan) {
         let jalan = [[],[]];
         let gerakBaris = [-1, -1, -1, 0, 1, 1, 1, 0];
@@ -241,6 +246,7 @@ export class Kosong extends Bidak {
         super(nama, warna, baris, kolom, dataHTML);
         dataHTML.innerHTML = '';
     }
+
     cekJalan(papan) {
         return jalan;
     }
